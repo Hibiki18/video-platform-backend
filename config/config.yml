@@ -1,0 +1,12 @@
+app:
+  name: video_platform_backend
+  port: :8080
+
+database:
+  host: localhost
+  port: :3306
+  user: root
+  password: 164621355
+  name: video_platform_db
+  MaxIdleConns: 10
+  MaxOpenConns: 120
