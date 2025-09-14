@@ -20,6 +20,10 @@ type Config struct {
 		MaxIdleConns	int    `yaml:"max_idle_conns"`
 		MaxOpenConns	int    `yaml:"max_open_conns"`
 	} `yaml:"database"`
+	JWT struct {
+		Secret         string `yaml:"secret"`
+		ExpireDuration int    `yaml:"expire_duration"`
+	} `yaml:"jwt"`
 }
 
 var AppConfig Config

@@ -10,3 +10,7 @@ database:
   name: video_platform_db
   MaxIdleConns: 10
   MaxOpenConns: 120
+
+jwt:
+  secret: my_secret_key
+  expire_duration: 72
