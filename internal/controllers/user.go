@@ -24,7 +24,7 @@ func Register(ctx *gin.Context) {
 	}
 	user.Password = hashedPassword
 	//生成JWT令牌
-	token, err := utils.GenerateJWT(user.Username)
+	token, err := utils.GenerateJWT(&user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
@@ -68,7 +68,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 	//生成JWT令牌
-	token, err := utils.GenerateJWT(user.Username)
+	token, err := utils.GenerateJWT(&user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return

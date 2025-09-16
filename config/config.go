@@ -9,21 +9,28 @@ import (
 type Config struct {
 	App struct {
 		Name string `yaml:"name"`
-		Port string    `yaml:"port"`
+		Port string `yaml:"port"`
 	} `yaml:"app"`
 	Database struct {
-		Host     string `yaml:"host"`
-		Port     string `yaml:"port"`
-		User     string `yaml:"user"`
-		Password string `yaml:"password"`
-		Name     string `yaml:"name"`
-		MaxIdleConns	int    `yaml:"max_idle_conns"`
-		MaxOpenConns	int    `yaml:"max_open_conns"`
+		Host         string `yaml:"host"`
+		Port         string `yaml:"port"`
+		User         string `yaml:"user"`
+		Password     string `yaml:"password"`
+		Name         string `yaml:"name"`
+		MaxIdleConns int    `yaml:"max_idle_conns"`
+		MaxOpenConns int    `yaml:"max_open_conns"`
 	} `yaml:"database"`
 	JWT struct {
 		Secret         string `yaml:"secret"`
 		ExpireDuration int    `yaml:"expire_duration"`
 	} `yaml:"jwt"`
+	Minio struct {
+		Endpoint   string `yaml:"endpoint"`
+		AccessKey  string `yaml:"access_key"`
+		SecretKey  string `yaml:"secret_key"`
+		UseSSL     bool   `yaml:"use_ssl"`
+		Bucket string `yaml:"bucket"`
+	} `yaml:"minio"`
 }
 
 var AppConfig Config

@@ -14,3 +14,10 @@ database:
 jwt:
   secret: my_secret_key
   expire_duration: 72
+
+minio:
+  endpoint: localhost:9000
+  access_key: minioadmin
+  secret_key: minioadmin
+  use_ssl: false
+  bucket: videos

@@ -5,24 +5,25 @@ import (
 	"strings"
 	"time"
 	"video-platform-backend/config"
+	"video-platform-backend/internal/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 func getJWTSecret() []byte {
-    return []byte(config.AppConfig.JWT.Secret)
+	return []byte(config.AppConfig.JWT.Secret)
 }
 
-func GenerateJWT(username string) (string, error) {
+func GenerateJWT(user *models.User) (string, error) {
 	token_lifespan := config.AppConfig.JWT.ExpireDuration
 	if token_lifespan <= 0 {
-        token_lifespan = 72 // 默认 72 小时
-    }
-		
+		token_lifespan = 72 // 默认 72 小时
+	}
+
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
-	claims["username"] = username
+	claims["username"] = user.Username
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(getJWTSecret())
@@ -36,10 +37,10 @@ func ExtractToken(c *gin.Context) string {
 	}
 	return ""
 }
-
-func ParseToken(c *gin.Context) (error) {
+// 解析 token 并验证
+func ParseToken(c *gin.Context) error {
 	tokenString := ExtractToken(c)
-	fmt.Println(tokenString)
+	//fmt.Println(tokenString)
 
 	parser := jwt.NewParser(jwt.WithLeeway(30 * time.Second))
 
@@ -72,6 +73,7 @@ func ExtractUsername(c *gin.Context) (string, error) {
 	// 如果jwt有效
 	if ok && token.Valid {
 		username := claims["username"].(string)
+		//fmt.Println("Extracted username:", username)
 		return username, nil
 	}
 	return "", fmt.Errorf("invalid token")
